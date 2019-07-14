@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function HashTable() {
+        this.storage = [];
+        this.count = 0; // 表示已经存了多少个数据
+        this.limit = 8; // 表示一共可以存多少数据
+    }
+
+    HashTable.prototype = {
+        constructor: HashTable,
+        hashFunc(str) {
+            let hashCode = 0;
+            for (let i = 0; i < str.length; i++) {
+                hashCode = 37 * hashCode + str.charCodeAt(i);
+            }
+            hashCode = hashCode % this.limit;
+            return hashCode;
+        },
+        // 插入数据
+        put(key, value) {
+            const index = this.hashFunc(key);
+            let bucket = this.storage[index];
+            if (bucket === undefined) {
+                bucket = [];
+                this.storage[index] = bucket;
+            }
+            let overRide = false;
+            for (const value of bucket) {
+                if (value[0] === key) {
+                    value[1] = value;
+                    overRide = true;
+                }
+            }
+            if (!overRide) {
+                bucket.push([key, value]);
+                this.count++;
+            }
+            if (this.count / this.length > 0.75) {
+                this.resize(this.length * 2);
+            }
+        },
+        // get data
+        get(key) {
+            const index = this.hashFunc(key);
+            const bucket = this.storage[index];
+
+            if (null === bucket) {
+                return null;
+            }
+            for (const value of bucket) {
+                if (value[0] === key) {
+                    return value[1]
+                }
+            }
+            return null;
+        },
+        // delete
+        remove(key) {
+            const index = this.hashFunc(key);
+            const bucket = this.storage[index];
+
+            if (null === bucket) {
+                return null;
+            }
+
+            for (let i = 0; i < bucket.length; i++) {
+                const tuple = bucket[i];
+                if (tuple[0] === key) {
+                    bucket.splice(i, 1);
+                    this.count--;
+                    if (this.limit > 8 && this.count < this.length * 0.25) {
+                        this.resize(Math.floor(this.length / 2));
+                    }
+                }
+            }
+            return null;
+        },
+        // resize
+        resize(newLimit) {
+            const oldStorage = this.storage;
+            this.storage = [];
+            this.limit = newLimit;
+            this.count = 0;
+
+            for (let i = 0; i < oldStorage.length; i++) {
+                const bucket = oldStorage[i];
+                if (null === bucket) {
+                    continue;
+                }
+                for (let i = 0; i < bucket.length; i++) {
+                    const tuple = bucket[i];
+                    if (tuple[0]) {
+                        this.put(tuple[0], tuple[1]);
+                        this.count++;
+                    }
+                }
+            }
+        },
+        // is prime
+        isPrime(num) {
+            const temp = parseInt(Math.sqrt(num));
+            for (let i = 2; i < temp; i++) {
+                if (temp % i === 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    };
+    const hashTable = new HashTable();
+    hashTable.put("key", "kkkk");
+    console.log(hashTable.get("key"));
+    console.log(hashTable);
+</script>
+</body>
+</html>

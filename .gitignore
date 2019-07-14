@@ -1,6 +1,5 @@
 /node_modules
 .idea/
 .vscode
-baisc/
 leetcode/venv
 note.md

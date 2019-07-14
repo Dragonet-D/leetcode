@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>集合</title>
+</head>
+<body>
+<script>
+    function Set() {
+        this.item = {}
+    }
+
+    Set.prototype = {
+        constructor: Set,
+        add(value) {
+            if (this.has(value)) {
+                this.item[value] = value;
+            }
+        },
+        has(value) {
+            return this.item.hasOwnProperty(value);
+        }
+    }
+</script>
+</body>
+</html>

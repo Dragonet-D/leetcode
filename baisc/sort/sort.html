@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 冒泡排序
+    function bubbleSort(arr) {
+        const arr1 = arr.slice();
+        const {length} = arr;
+        for (let j = length - 1; j >= 0; j--) {
+            for (let i = 0; i < j; i++) {
+                if (arr1[i] > arr1[i + 1]) {
+                    [arr1[i + 1], arr1[i]] = [arr1[i], arr1[i + 1]];
+                }
+            }
+        }
+        return arr1;
+    }
+
+    const arr = [89, 2, 12, 23, 11, 1, 3, 4, 6, 90];
+    console.log(bubbleSort(arr));
+
+    // 选择排序
+    function selectionSort(arr) {
+        const arr1 = arr.slice();
+        const {length} = arr;
+        for (let i = 0; i < length - 1; i++) {
+            let min = i;
+            for (let j = min + 1; j < length; j++) {
+                if (arr1[min] > arr1[j]) {
+                    min = j;
+                }
+            }
+            [arr1[min], arr1[i]] = [arr1[i], arr1[min]];
+        }
+        return arr1;
+    }
+
+    console.log(selectionSort(arr));
+
+    // 插入排序
+    function insertSort(arr) {
+        const {length} = arr;
+        const arr1Temp = arr.slice();
+        for (let i = 1; i < length; i++) {
+            let j = i;
+            let temp = arr1Temp[i];
+            while (j > 0 && arr1Temp[j - 1] > temp) {
+                arr1Temp[j] = arr1Temp[j - 1];
+                j--;
+            }
+            arr1Temp[j] = temp;
+        }
+        return arr1Temp;
+    }
+
+    console.log(insertSort(arr));
+
+    function shellSort(arr) {
+        const {length} = arr;
+        let gap = Math.floor(length / 2);
+        const arrTmp = arr.slice();
+        while (gap > 0) {
+            // 4.实现插入排序
+            for (let i = gap; i < length; i++) {
+                // 4.1.保存临时变量
+                let j = i;
+                const temp = arrTmp[i];
+
+                // 4.2.插入排序的内层循环
+                while (j > gap - 1 && arrTmp[j - gap] > temp) {
+                    arrTmp[j] = arrTmp[j - gap];
+                    j -= gap
+                }
+                // 4.3.将选出的j位置设置为temp
+                arrTmp[j] = temp
+            }
+
+            // 5.重新计算新的间隔
+            gap = Math.floor(gap / 2)
+        }
+        return arrTmp;
+    }
+
+    console.log(shellSort(arr));
+
+    function medium(left, right, array) {
+        const arr = array.slice();
+        // 1.求出中间的位置
+        const center = Math.floor((left + right) / 2);
+
+        // 2.判断并且进行交换
+        if (arr[left] > arr[center]) {
+            [arr[left], arr[center]] = [arr[center], arr[left]]
+        }
+        if (arr[center] > arr[right]) {
+            [arr[right], arr[center]] = [arr[center], arr[right]]
+        }
+        if (arr[left] > arr[right]) {
+            [arr[right], arr[left]] = [arr[left], arr[right]]
+        }
+
+        // 3.巧妙的操作: 将center移动到right - 1的位置.
+        [arr[center], arr[right - 1]] = [arr[right - 1], arr[center]];
+
+        // 4.返回pivot
+        return arr;
+    }
+
+    function quickSort(left, right, array) {
+        if (left >= right) return;
+        const arr = array.slice();
+        // 1.获取枢纽
+        const pivot = medium(left, right, arr);
+
+        // 2.开始进行交换
+        let i = left;
+        let j = right - 1;
+        while (true) {
+            while (arr[++i] < pivot) {
+            }
+            while (arr[--j] > pivot) {
+            }
+            if (i < j) {
+                [arr[i], arr[j]] = [arr[j], arr[i]]
+            } else {
+                break
+            }
+        }
+
+        // 3.将枢纽放在正确的位置
+        [arr[i], arr[right - 1]] = [arr[right - 1], arr[i]];
+        // 4.递归调用左边
+        this.quickSort(left, i - 1, array);
+        this.quickSort(i + 1, right, array)
+    }
+
+    console.log(quickSort(0, arr.length - 1, arr));
+
+    function quickSort1(arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+        const left = [];
+        const right = [];
+        const pivot = arr[0];
+        for (let i = 1; i < arr.length; i++) {
+            arr[i] > pivot ? right.push(arr[i]) : left.push(arr[i]);
+        }
+        return quickSort1(left).concat(pivot, quickSort1(right));
+    }
+
+    function quickSort2(arr) {
+        if (!arr.length) {
+            return []
+        }
+        const [head, ...rest] = arr;
+        const left = rest.filter(item => item < head);
+        const right = rest.filter(item => item > head);
+        return quickSort2(left).concat(head, quickSort2(right));
+    }
+
+    function mergeSort(arr) {
+        if (1 === arr.length) {
+            return arr;
+        }
+        const middle = Math.floor(arr.length / 2);
+        const left = arr.slice(0, middle);
+        const right = arr.slice(middle);
+        return merge(mergeSort(left), mergeSort(right))
+    }
+
+    function merge(left, right) {
+        let result = [];
+        let indexLeft = 0;
+        let indexRight = 0;
+
+        while (indexLeft < left.length && indexRight < right.length) {
+            if (left[indexLeft] < right[indexRight]) {
+                result.push(left[indexLeft]);
+                indexLeft++
+            } else {
+                result.push(right[indexRight]);
+                indexRight++;
+            }
+        }
+        return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+    }
+
+    function mergeSort1(arr) {
+        if (arr.length === 1) {
+            return arr;
+        }
+        const middle = Math.floor(arr.length / 2);
+        const left = arr.slice(0, middle);
+        const right = arr.slice(middle);
+        return merge1(mergeSort1(left), mergeSort1(right));
+    }
+
+    function merge1(left, right) {
+        const temp = [];
+        let leftIndex = 0;
+        let rightIndex = 0;
+
+        while (leftIndex < left.length && rightIndex < right.length) {
+            if (left[leftIndex] < right[rightIndex]) {
+                temp.push(left[leftIndex]);
+                leftIndex++;
+            } else {
+                temp.push(right[rightIndex]);
+                rightIndex++;
+            }
+        }
+        return temp.concat(left.slice(leftIndex), right.slice(rightIndex));
+    }
+
+    console.log(merge1([1, 3, 5, 7], [2, 4, 6]));
+</script>
+</body>
+</html>

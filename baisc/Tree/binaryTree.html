@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Node(key) {
+        this.key = key;
+        this.left = null;
+        this.right = null;
+    }
+
+    function BinarySearchTree() {
+        this.root = null;
+    }
+
+    BinarySearchTree.prototype = {
+        constructor: BinarySearchTree,
+        insert(key) {
+            const newNode = new Node(key);
+            if (this.root === null) {
+                this.root = newNode;
+            } else {
+                this.insertNode(this.root, newNode);
+            }
+        },
+        insertNode(node, newNode) {
+            if (newNode.key < node.key) {
+                if (node.left === null) {
+                    node.left = newNode;
+                } else {
+                    this.insertNode(node.left, newNode);
+                }
+            } else {
+                if (node.right === null) {
+                    node.right = newNode;
+                } else {
+                    this.insertNode(node.right, newNode);
+                }
+            }
+        },
+        prevOrderTraversal(callback) {
+            this.prevOrderTraversalNode(this.root, callback);
+        },
+        prevOrderTraversalNode(node, callback) {
+            if (!node) {
+                callback(node.key);
+                // 处理经过节点的左子节点
+                this.prevOrderTraversalNode(node.left, callback);
+                // 处理经过节点的右子节点
+                this.prevOrderTraversalNode(node.right, callback);
+            }
+        },
+        midOrderTraversal(callback) {
+            this.midOrderTraversalNode(callback);
+        },
+        midOrderTraversalNode(node, callback) {
+            if (node !== null) {
+                this.midOrderTraversalNode(node, callback);
+                callback(node.key);
+                this.midOrderTraversalNode(node, callback);
+            }
+        },
+        min() {
+            return this.minNode(this.root);
+        },
+        minNode(node) {
+            if (node) {
+                while (node.left !== null) {
+                    node = node.left;
+                }
+                return node.key;
+            }
+            return null;
+        },
+        max() {
+            return this.maxNode(this.root);
+        },
+        maxNode(node) {
+            if (node) {
+                while (node.right !== null) {
+                    node = node.right
+                }
+                return node.key;
+            }
+        },
+        search(key) {
+            let node = this.root;
+            while (node !== null) {
+                if (node.key > key) {
+                    node = node.left;
+                } else if (node.key < key) {
+                    node = node.right;
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        },
+        remove(key) {
+            let current = this.root;
+            let parent = null;
+            let isLeftChild = true;
+            while (current.key !== key) {
+                parent = current;
+                if ( key < current.key) {
+                    isLeftChild = true;
+                    current = current.left;
+                }  else {
+                    current = current.right;
+                    isLeftChild = false;
+                }
+                if (current === null) return false;
+            }
+            // 叶子节点
+            if (current.left === null && current.right === null) {
+                if (current.key === key) {
+                    this.root = null;
+                } else if (isLeftChild) {
+                    parent.left = null;
+                } else {
+                  parent.right = null;
+                }
+            }
+        }
+    };
+    const binaryTree = new BinarySearchTree();
+    binaryTree.insert(9);
+    binaryTree.insert(3);
+    binaryTree.insert(8);
+    binaryTree.insert(10);
+    binaryTree.insert(13);
+    binaryTree.insert(2);
+    binaryTree.insert(11);
+    binaryTree.insert(17);
+    console.log(binaryTree.min());
+    console.log(binaryTree.max());
+    console.log(binaryTree.search(2));
+    console.log(binaryTree.search(22));
+    binaryTree.prevOrderTraversal((e) => {
+        console.log(e);
+    });
+    console.log(binaryTree);
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <script>
+        const arr = [3, 2, 4];
+
+        function f(nums, target) {
+            const map = {};
+            for (let i = 0; i < nums.length; i++) {
+                const temp = target - nums[i];
+                if (map[temp] !== undefined) {
+                    return [map[temp], i]
+                }
+                map[nums[i]] = i
+            }
+        }
+
+        console.log(f(arr, 6));
+    </script>
+</body>
+
+</html>

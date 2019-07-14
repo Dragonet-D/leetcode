@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Node(data) {
+        this.data = data;
+        this.next = null;
+        this.previous = null;
+    }
+
+    function DoublyLinkList() {
+        this.length = 0;
+        this.header = null;
+        this.tail = null;
+    }
+
+    DoublyLinkList.prototype = {
+        constructor: DoublyLinkList,
+        append(data) {
+            const newNode = new Node(data);
+            if (!this.length) {
+                this.header = newNode;
+                this.tail = newNode;
+            } else {
+                newNode.previous = this.tail;
+                this.tail.next = newNode;
+                this.tail = newNode;
+            }
+            this.length++;
+        },
+        insert(pos, data) {
+            if (!this.length) {
+                this.append(data);
+            } else {
+                if (pos === this.length) {
+                    this.append(data);
+                } else if (0 === pos) {
+                    const newNode = new Node(data);
+                    this.header.previous = newNode;
+                    newNode.next = this.header;
+                    this.header = newNode;
+                    this.length++;
+                } else {
+                    const newNode = new Node(data);
+                    let index = 0;
+                    let current = this.header;
+                    while (index++ < pos) {
+                        current = current.next;
+                    }
+                    newNode.next = current;
+                    newNode.previous = current.previous;
+                    current.previous.next = newNode;
+                    current.previous = newNode;
+                    this.length++
+                }
+            }
+        },
+        toString() {
+            let index = 0;
+            let current = this.header;
+            let result = "";
+            while (index++ < this.length) {
+                result += current.data + " ";
+                current = current.next;
+            }
+            return result;
+        }
+    };
+    const doublyLinkedList = new DoublyLinkList();
+    doublyLinkedList.append("aaa");
+    doublyLinkedList.append("bbb");
+    doublyLinkedList.insert(2, "ddd");
+    doublyLinkedList.insert(2, "aaaddd");
+    doublyLinkedList.insert(2, "aaadddaaaa");
+    console.log(doublyLinkedList);
+
+    console.log(doublyLinkedList.toString());
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function Node(data) {
+    this.data = data;
+    this.next = null
+  }
+
+  function LinkedList() {
+    this.head = null;
+    this.length = 0;
+  }
+
+  LinkedList.prototype = {
+    constructor: LinkedList,
+    // append
+    append(data) {
+      const newNode = new Node(data);
+      if (0 === this.length) {
+        this.head = newNode;
+      } else {
+        let current = this.head;
+        while (current.next) {
+          current = current.next
+        }
+        current.next = newNode;
+      }
+      this.length++
+    },
+    // to string
+    toString() {
+      let index = 0;
+      let current = this.head;
+      let result = "";
+      while (index++ < this.length) {
+        result += current.data + "<----->";
+        current = current.next;
+      }
+      return result;
+    },
+    // insert
+    insert(pos, data) {
+      const newNode = new Node(data);
+      if (0 === pos) {
+        this.head = newNode;
+        this.length++
+      } else {
+        let index = 0;
+        let current = this.head;
+        let prev = current;
+        while (index++ < pos) {
+          prev = current;
+          current = current.next;
+        }
+        prev.next = newNode;
+        newNode.next = current
+      }
+      this.length++
+    },
+    // update
+    update(pos, data) {
+      let index = 0;
+      let current = this.head;
+      while (index < pos) {
+        current = current.next;
+        index++
+      }
+      current.data = data;
+    },
+    // is empty
+    isEmpty() {
+      return this.length === 0
+    }
+  };
+  const linkedList = new LinkedList();
+  linkedList.append("hello");
+  linkedList.append("world");
+  linkedList.insert(1, "insert 1");
+  console.log(linkedList.toString());
+  linkedList.update(1, "update data");
+  console.log(linkedList.toString());
+</script>
+</body>
+</html>
