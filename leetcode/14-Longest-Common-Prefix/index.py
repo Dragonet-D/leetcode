@@ -1,5 +1,6 @@
+from typing import List
 class Solution:
-  def longestCommonPrefix(self, strs: list[str]) -> str:
+  def longestCommonPrefix(self, strs: List[str]) -> str:
     if not strs:
       return ''
     for i in range(len(strs[0])):
@@ -8,7 +9,7 @@ class Solution:
           return strs[0][:i]
     return strs[0]
 
-  def longestCommonPrefix2(self, strs: list[str]) -> str:
+  def longestCommonPrefix2(self, strs: List[str]) -> str:
     result = ''
     i = 0
     while True:
