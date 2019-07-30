@@ -3,7 +3,7 @@ class Solution:
     count = 0
     local_count = 0
     for i in range(len(s)):
-      if i == ' ':
+      if s[i] == ' ':
         local_count = 0
       else:
         local_count += 1
