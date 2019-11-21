@@ -1,5 +1,7 @@
 # Definition for a binary tree node.
 from typing import List
+
+
 class TreeNode:
   def __init__(self, x):
     self.val = x
@@ -14,3 +16,8 @@ class Solution:
         return None
       mid = (start + end) // 2
       node = TreeNode(nums[mid])
+      node.left = to_bst(nums, start, mid - 1)
+      node.right = to_bst(nums, mid + 1, end)
+      return node
+
+    return to_bst(nums, 0, len(nums) - 1)
