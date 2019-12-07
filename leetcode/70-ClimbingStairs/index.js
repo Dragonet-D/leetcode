@@ -7,4 +7,4 @@ const climbStairs = function (n) {
   return current
 };
 
-console.log(climbStairs(5));
+console.log(climbStairs(6));
