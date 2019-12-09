@@ -3,8 +3,8 @@ function isValid(s) {
     '(': ')',
     '[': ']',
     '{': '}'
-  }
-  const arr = []
+  };
+  const arr = [];
   for (const value of s) {
     if (map[value]) {
       arr.push(value)
