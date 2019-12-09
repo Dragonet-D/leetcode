@@ -9,6 +9,7 @@ class TreeNode:
 class Solution:
   def isValidBST(self, root: TreeNode) -> bool:
     return self.valid(root, float('-inf'), float('inf'))
+
   def valid(self, root, min, max):
     if not root:
       return True
