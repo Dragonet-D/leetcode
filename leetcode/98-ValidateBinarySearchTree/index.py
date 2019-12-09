@@ -5,7 +5,6 @@ class TreeNode:
     self.left = None
     self.right = None
 
-
 class Solution:
   def isValidBST(self, root: TreeNode) -> bool:
     return self.valid(root, float('-inf'), float('inf'))
