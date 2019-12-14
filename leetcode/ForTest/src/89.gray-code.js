@@ -29,3 +29,4 @@ function grayCode1(n) {
 
 console.log(grayCode1(0));
 console.log(grayCode(2));
+
