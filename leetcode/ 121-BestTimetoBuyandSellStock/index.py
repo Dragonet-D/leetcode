@@ -9,3 +9,7 @@ class Solution:
       maxProft = max(maxProft, price - minPrice)
 
     return maxProft
+
+
+
+
