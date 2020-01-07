@@ -14,3 +14,5 @@ function isValid(s) {
   }
   return arr.length === 0
 }
+
+console.log(isValid('(()){}[]'));
