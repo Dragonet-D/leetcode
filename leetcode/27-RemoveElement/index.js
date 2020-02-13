@@ -9,5 +9,8 @@ function removeElement(nums, val) {
       i += 1;
     }
   }
+  console.log(nums)
   return last + 1;
 }
+
+removeElement([1,2,3,1,2,3,1,2,3], 2)
