@@ -8,3 +8,14 @@ function maxSubArray(nums: number[]): number {
   })
   return maxAns
 }
+
+function Status(l, r, m, i) {
+  this.lSum = l
+  this.rSum = r
+  this.mSum = m
+  this.iSum = i
+}
+
+const pushUp = (l, r) => {
+  const iSum = l.iSum + r.iSum
+}
