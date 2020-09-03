@@ -13,5 +13,5 @@ class Solution:
       leftHeight, rightHeight = getHeight(root.left), getHeight(root.right)
       if leftHeight < 0 or rightHeight < 0 or abs(leftHeight - rightHeight) > 1:
         return  -1
-      return max(leftHeight - rightHeight) + 1
+      return max(leftHeight, rightHeight) + 1
     return getHeight(root) >= 0
