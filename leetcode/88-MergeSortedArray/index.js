@@ -14,7 +14,8 @@ var merge = function(nums1, m, nums2, n) {
       p2--
     }
   }
-
+  console.log(nums1);
+  return
   if (p2 >= 0) {
     nums1.splice(0, p2 + 1, ...nums2.slice(0, p2 + 1))
   }
